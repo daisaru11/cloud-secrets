@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-secrets
+  labels:
+    app.kubernetes.io/name: cloud-secrets
+  namespace: cloud-secrets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloud-secrets
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cloud-secrets
+    spec:
+      serviceAccountName: "cloud-secrets"
+      containers:
+        - name: cloud-secrets-webhook
+          image: daisaru11/cloud-secrets:0.0.1
+          args: ["--debug", "controller"]
+          volumeMounts:
+            - name: certs
+              mountPath: /certs
+      volumes:
+        - name: certs
+          secret:
+            secretName: cloud-secrets-certs
