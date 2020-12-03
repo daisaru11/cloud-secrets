@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/daisaru11/cloud-secrets/cmd/controller"
 	"github.com/daisaru11/cloud-secrets/cmd/exec"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -23,7 +22,6 @@ func NewRootCommand() *cobra.Command {
 
 	cmd.PersistentFlags().Bool("debug", false, "Enable debug output in logs")
 
-	cmd.AddCommand(controller.NewControllerCommand())
 	cmd.AddCommand(exec.NewExecCommand())
 
 	return cmd
